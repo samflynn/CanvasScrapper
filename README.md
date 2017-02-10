@@ -15,4 +15,7 @@ I have tried to make this as easy to use, especially for people who dont use pyt
 
 This canvas scrapper downloads only the courses that are marked to show up in the courses menu.   
 
-![image deleted](http://i.imgur.com/dJvnlkq.png)
+![image deleted](http://i.imgur.com/dJvnlkq.png)               
+               
+To add them to course menu click on                  
+![image deleted](http://i.imgur.com/kr3sRBq.png)               
