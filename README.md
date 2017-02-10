@@ -6,7 +6,7 @@ I have tried to make this as easy to use, especially for people who dont use pyt
 
 1. Download this whole repository as a zip.                        
 
-2. Install python 2.x or 3x from (here)[https://www.python.org/downloads/]                
+2. Install python 2.x or 3x from [here](https://www.python.org/downloads/)                
 
 3. Run "only_run_for_first_time_run_as_admin_installdependancies.bat" to install the dependancies, run it as an administrator.            
 
