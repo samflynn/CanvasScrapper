@@ -13,7 +13,7 @@ I have tried to make this as easy to use, especially for people who dont use pyt
 4. Run "launch canvas scrapper py2x.bat" or "launch canvas scrapper py3x.bat" acoording to the python version you have 2x or 3x respectively.                       
 
 
-This canvas scrapper downloads only the courses that are marked to show up in the courses menu.   
+This canvas scrapper downloads only **the courses that are marked to show up in the courses menu.**   
 
 ![image deleted](http://i.imgur.com/dJvnlkq.png)               
                
