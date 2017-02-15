@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
-
+import getpass
 import os
-#import urllib2
 from bs4 import BeautifulSoup as bs
-#import mechanize
-#import cookielib
 from selenium import webdriver
-#from selenium.webdriver.common.keys import Keys
-#import time
 import re
 import requests
-
+# from creds import USERNAME, PASSWORD
 
 def course_selector():
+    """
+    Lists out all the courses available for in student profile
+    """
     print " "
     i = 0
     for code in num:
@@ -26,32 +24,30 @@ def course_selector():
         l = range(len(lnk))
         print "Courses selected: %s " % (l)
     else:
-        print "Courses selected: %s " % (l)
+        print "Courses selected: %s " % (number)
         l = number.split()
         l = [int(a) for a in l]
         l.sort()
+
     course_downloader(l)
 
-
-
 def course_downloader(l):
-    #print l
     for a in l:
-#       browser.get(lnk[a])
-#        print num_lnk[num_lnk.keys()[a]]
         origi = os.getcwd()
+
         print "Creating folder: %s" % num[a]
+        
         if not os.path.exists(num[a]):
                 os.makedirs(num[a])
         os.chdir(num[a])
+        
         browser.get(lnk[a])
-        print browser.current_url
         course = bs(browser.page_source, 'html.parser')
         mod = course.findAll(True, {'class' : "item-group-condensed context_module student-view"})
         if not mod:
-            #print "Empty"
+
             mod = course.findAll(True, {'class' : "item-group-condensed context_module "})
-        #print mod[0]
+        
         i = 0
         for n in mod:
             foldnme = mod[i].find(True, {"class" : "name"}).string
@@ -74,10 +70,8 @@ def course_downloader(l):
             os.chdir(origi2)
             i +=1
         os.chdir(origi)
-    
-        
+            
 def file_creator(downlink):
-#    os.mkdir(foldnme)
 
     text = downlink
     if "files" in text:
@@ -94,8 +88,6 @@ def file_creator(downlink):
                 f.write(response.content)
     else: 
         print " "
-        
-#    os.chdir(origi)
 
 print " "
 print "###################################################################"
@@ -106,8 +98,19 @@ print "###################################################################"
 print " "
 
 #origi = os.getcwd()
-cd = os.getcwd() + r"\phantomjs-2.1.1-windows\bin\phantomjs.exe"
-#phantomjs = origi + "\phantomjs-2.1.1-windows\bin\phantomjs.exe"
+supported_os = {"1": "Windows", "2": "OSX"}
+your_os = None
+while your_os not in supported_os.keys():
+    your_os = raw_input("Please choose your operating system number (1 or 2):\n1.Windows\n2.OSX\n\n>>")
+
+
+if your_os == '1':
+    cd = os.getcwd() + r"\phantomjs-2.1.1-windows\bin\phantomjs.exe"
+elif your_os == '2':
+    cd = os.getcwd() + r"/phantomjs-2.1.1-macosx/bin/phantomjs"
+else:
+    pass
+
 browser = webdriver.PhantomJS(cd)
 
 print " "
@@ -115,19 +118,21 @@ browser.get("https://sit.instructure.com")
 print "This \"https://shibboleth.stevens.edu/idp/Authn/UserPassword\" should be printed below, else there is some issue with the Internet connection or PhantomJs or the program needs to be run as Admin"
 print browser.current_url 
 
-print "Enter stevens Username"
-user = raw_input() 
-print "Enter Password"
-passw = raw_input()
+student_username = None
+student_password = None
+
+while not student_username:
+    student_username = raw_input("Enter stevens Username\n>> ") 
+
+while not student_password:
+    student_password = getpass.getpass(prompt="Please enter your MyStevens password\n>>")
+
 
 username = browser.find_element_by_name("j_username")
 password = browser.find_element_by_name("j_password")
 
-username.send_keys(user)
-password.send_keys(passw)
-
-#username.send_keys("")
-#password.send_keys("")
+username.send_keys(student_username)
+password.send_keys(student_password)
 
 login_attempt = browser.find_element_by_xpath("//*[@type='submit']")
 
@@ -155,55 +160,4 @@ for link in main.findAll('a', {'class' : 'ic-DashboardCard__link'}):
 
 raw_name = main.findAll(True, {'class' : "ic-DashboardCard__header-subtitle ellipsis"})
 
-#print raw_name
-#print lnk
-#print num
-
 course_selector()
-
-
-
-
-#==============================================================================
-# br = mechanize.Browser()
-# cj = cookielib.LWPCookieJar()
-# br.set_cookiejar(cj)
-# 
-# br.set_handle_equiv(True)
-# br.set_handle_gzip(True)
-# br.set_handle_redirect(True)
-# br.set_handle_referer(True)
-# br.set_handle_robots(False)
-# br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
-# 
-# br.addheaders = [('User-agent', 'Chrome')]
-# 
-# 
-# br.open('https://shibboleth.stevens.edu/idp/Authn/UserPassword')
-# 
-# for f in br.forms():
-#     print f
-# 
-#==============================================================================
-
-#==============================================================================
-# num_nme ={}
-# 
-# for name in soup.findAll('a', {'class' : "ic-DashboardCard__header-subtitle ellipsis"}):
-#     
-#==============================================================================
-
-
-#wiki = "https://en.wikipedia.org/wiki/List_of_state_and_union_territory_capitals_in_India"
-#
-#page = urllib2.urlopen(wiki)
-#
-#soup = bs(page)
-
-#browser = webdriver.Firefox('C:/geckodriver/geckodriver.exe')
-
-#browser = webdriver.Chrome('C:/chromedriver/chromedriver.exe')
-
-
-
-
